@@ -11,14 +11,16 @@ public class ServerEntityCollectItemPacket implements Packet {
 
     private int collectedEntityId;
     private int collectorEntityId;
+    private int pickupItemCount;
 
     @SuppressWarnings("unused")
     private ServerEntityCollectItemPacket() {
     }
 
-    public ServerEntityCollectItemPacket(int collectedEntityId, int collectorEntityId) {
+    public ServerEntityCollectItemPacket(int collectedEntityId, int collectorEntityId, int pickupItemCount) {
         this.collectedEntityId = collectedEntityId;
         this.collectorEntityId = collectorEntityId;
+        this.pickupItemCount = pickupItemCount;
     }
 
     public int getCollectedEntityId() {
@@ -33,12 +35,14 @@ public class ServerEntityCollectItemPacket implements Packet {
     public void read(NetInput in) throws IOException {
         this.collectedEntityId = in.readVarInt();
         this.collectorEntityId = in.readVarInt();
+        this.pickupItemCount = in.readVarInt();
     }
 
     @Override
     public void write(NetOutput out) throws IOException {
         out.writeVarInt(this.collectedEntityId);
         out.writeVarInt(this.collectorEntityId);
+        out.writeVarInt(this.pickupItemCount);
     }
 
     @Override
